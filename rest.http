@@ -1,0 +1,8 @@
+POST /api/users/signup HTTP/1.1
+Host:  ticketing.dev
+Content-Type: application/json
+
+{
+  "email": "sandbox307@gmail.com",
+  "password": "some213156153121"
+}
