@@ -16,8 +16,8 @@ const app = express();
 app.set('trust proxy', true);
 app.use(json());
 app.use(cookieSessions({
-  signed:false,
-  secure:true
+  signed: false,
+  secure: true
 
 }))
 app.use(currentUserRouter);
@@ -32,6 +32,9 @@ app.all('*', async (req: Request) => {
 app.use(errorHandler);
 
 (async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY is missing');
+  }
   try {
     await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
     console.log('mongodb connected successfully')
@@ -41,6 +44,6 @@ app.use(errorHandler);
   app.listen(3000, () => {
     console.log('Listening on port 3000!!!!!!!!');
   });
-  
+
 })();
 
