@@ -1,5 +1,4 @@
 import { prop, getModelForClass, pre, modelOptions } from '@typegoose/typegoose';
-import { transform } from 'typescript';
 import { Password } from '../services/password';
 
 @pre<User>('save', async function () {
