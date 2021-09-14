@@ -32,6 +32,7 @@ app.all('*', async (req: Request) => {
 app.use(errorHandler);
 
 (async () => {
+
   if (!process.env.JWT_KEY) {
     throw new Error('JWT_KEY is missing');
   }
