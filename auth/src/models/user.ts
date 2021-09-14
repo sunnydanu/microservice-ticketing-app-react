@@ -1,5 +1,12 @@
-import { prop,getModelForClass, getClass } from '@typegoose/typegoose';
- 
+import { prop, getModelForClass, pre } from '@typegoose/typegoose';
+import { Password } from '../services/password';
+
+@pre<User>('save', async function () {
+   if(this.isModified('password')){
+       const hashed = await Password.toHash(this.get('password'));
+       this.set('password', hashed);
+   }
+})
 
 class User {
 
@@ -11,7 +18,8 @@ class User {
 
 }
 const UserModel = getModelForClass(User); // UserModel is a regular Mongoose Model with correct types
-  
-UserModel.create();
+
+
+
 
 export { UserModel }
