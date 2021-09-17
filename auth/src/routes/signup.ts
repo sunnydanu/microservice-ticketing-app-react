@@ -1,10 +1,11 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { validateRequest, BadRequestError } from '@dev.org/ms-common';
+import { RequestValidationError, BadRequestError } from '@dev.org/ms-common';
 import { UserModel } from "../models/user";
 import jwt from 'jsonwebtoken';
 
 const router = express.Router();
+
 
 router.post(
   "/api/users/signup",
