@@ -16,7 +16,7 @@ class Ticket {
     public title?: string;
 
     @prop({ required: true })
-    public price?: string;
+    public price?: number;
 
     @prop({ required: true })
     public userId?: string;

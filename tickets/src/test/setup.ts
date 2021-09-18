@@ -32,9 +32,10 @@ afterAll(async () => {
 })
 
 global.signin = () => {
+    const id = new mongoose.Types.ObjectId().toHexString();
     // Build a JWT payload . {id,email}
     const payload = {
-        id: 'somefakeid',
+        id,
         email: 'test@test.com'
     }
 
@@ -46,7 +47,7 @@ global.signin = () => {
 
     // Turn that session into JSON
     const sessionJSON = JSON.stringify(session);
-    
+
     // Take JOSN and encode it as base64
     const base64 = Buffer.from(sessionJSON).toString('base64');
 

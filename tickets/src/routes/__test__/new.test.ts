@@ -71,7 +71,7 @@ it('creates a tickets with a valid input', async () => {
     let tickets = await TicketModel.find({});
     expect(tickets.length).toEqual(0);
     const title: string = 'IamValidTitle';
-    const price: string = "10.50";
+    const price: number = 10;
 
     await request(app)
         .post('/api/tickets')

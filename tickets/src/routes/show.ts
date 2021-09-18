@@ -1,11 +1,11 @@
 
-import { NotFoundError, requireAuth } from '@freakybug/ms-common';
+import { NotFoundError } from '@freakybug/ms-common';
 import express, { Request, Response } from 'express';
 import { TicketModel } from '../models/ticket';
 
 const router = express.Router();
 
-router.get('/api/tickets/:id', requireAuth, async (req: Request, res: Response) => {
+router.get('/api/tickets/:id', async (req: Request, res: Response) => {
     const ticket = await TicketModel.findById(req.params.id);
 
     if (!ticket) {

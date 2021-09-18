@@ -15,7 +15,7 @@ it('return a 404 if the ticket is not found', async () => {
 it('return the ticket if the ticket is found', async () => {
 
     const title = 'concert';
-    const price = "20";
+    const price = 20;
     const response = await request(app)
         .post('/api/tickets')
         .set('Cookie', global.signin())
