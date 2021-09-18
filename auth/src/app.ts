@@ -8,7 +8,7 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
-import { errorHandler, NotFoundError } from '@dev.org/ms-common';
+import { errorHandler, NotFoundError } from '@freakybug/ms-common';
 
 const app = express();
 app.set('trust proxy', true);

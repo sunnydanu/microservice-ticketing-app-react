@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { RequestValidationError, BadRequestError } from '@dev.org/ms-common';
+import { RequestValidationError, BadRequestError } from '@freakybug/ms-common';
 import { UserModel } from "../models/user";
 import jwt from 'jsonwebtoken';
 

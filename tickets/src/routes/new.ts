@@ -1,5 +1,5 @@
 
-import { requireAuth, validateRequest } from '@dev.org/ms-common';
+import { requireAuth, validateRequest } from '@freakybug/ms-common';
 import { body } from 'express-validator';
 import express, { Request, Response } from 'express';
 import { TicketModel } from '../models/ticket';
