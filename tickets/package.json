@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dev.org/ms-common": "^1.0.3",
+    "@freakybug/ms-common": "^1.0.4",
     "@typegoose/typegoose": "^8.3.0",
     "@types/cookie-session": "^2.0.43",
     "@types/express": "^4.17.13",
