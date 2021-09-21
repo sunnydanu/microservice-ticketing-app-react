@@ -12,14 +12,14 @@ import { getClassForDocument, getModelForClass, modelOptions, prop } from '@type
 })
 
 class Ticket {
-    @prop({ required: true })
-    public title?: string;
+    @prop({ required: true, type: () => String })
+    public title!: string;
 
-    @prop({ required: true })
-    public price?: number;
+    @prop({ required: true, type: () => Number })
+    public price!: number;
 
-    @prop({ required: true })
-    public userId?: string;
+    @prop({ required: true, type: () => String })
+    public userId!: string;
 }
 
 const TicketModel = getModelForClass(Ticket);
