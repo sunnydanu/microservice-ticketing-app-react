@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-
+ 
 const createTicket = () => {
     return request(app).post('/api/tickets')
         .set('Cookie', global.signin())
@@ -19,3 +19,4 @@ it('can fetch a list of tickets', async () => {
 
     expect(response.body.length).toEqual(3);
 });
+

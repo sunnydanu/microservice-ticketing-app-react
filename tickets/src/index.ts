@@ -12,6 +12,17 @@ import { randomBytes } from 'crypto';
   if (!process.env.MONGO_URI) {
     throw new Error('MONGO_URI is missing');
   }
+
+  if (!process.env.NATS_CLIENT_ID) {
+    throw new Error('NATS_CLIENT_ID is missing');
+  }
+  if (!process.env.NATS_URL) {
+    throw new Error('NATS_URL is missing');
+  }
+  if (!process.env.NATS_CLUSTER_ID) {
+    throw new Error('NATS_CLUSTER_ID is missing');
+  }
+  
   try {
     await mongoose.connect(process.env.MONGO_URI);
     console.log('mongodb connected successfully')
@@ -20,7 +31,7 @@ import { randomBytes } from 'crypto';
   }
 
   try {
-    await natsWrapper.connect('ticketing', `publisher-${randomBytes(4).toString('hex')}`, 'http://nats-srv:4222');
+    await natsWrapper.connect(process.env.NATS_CLUSTER_ID, process.env.NATS_CLIENT_ID, process.env.NATS_URL);
 
     natsWrapper.client.on('close', () => {
       console.log('NATS connection closed!');
@@ -28,7 +39,7 @@ import { randomBytes } from 'crypto';
     });
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
-    
+
   } catch (error) {
     console.error(error);
   }
