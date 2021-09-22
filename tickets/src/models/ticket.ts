@@ -5,6 +5,7 @@ import { getClassForDocument, getModelForClass, modelOptions, prop } from '@type
         toJSON: {
             transform(doc, ret) {
                 ret.id = ret._id
+                delete ret._id
             },
             versionKey: false
         }
