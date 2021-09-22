@@ -12,13 +12,13 @@ import { getClassForDocument, getModelForClass, modelOptions, prop } from '@type
 })
 
 class Ticket {
-    @prop({ required: true, type: () => String })
+    @prop({ required: true })
     public title!: string;
 
-    @prop({ required: true, type: () => Number })
+    @prop({ required: true })
     public price!: number;
 
-    @prop({ required: true, type: () => String })
+    @prop({ required: true })
     public userId!: string;
 }
 
