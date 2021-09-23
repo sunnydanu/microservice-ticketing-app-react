@@ -11,17 +11,14 @@ declare global {
 }
 
 beforeAll(async () => {
-   
     process.env.JWT_KEY = 'someSecretTest';
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
     mongo = await MongoMemoryServer.create();
-    const mongoUri = mongo.getUri();
-    await mongoose.connect(mongoUri);
+    await mongoose.connect(mongo.getUri());
 });
 
 beforeEach(async () => {
-    jest.setTimeout(10000);
     jest.clearAllMocks();
 
     const collections = await mongoose.connection.db.collections();

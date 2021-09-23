@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 import { app } from '../app'
 import request from 'supertest';
 
+jest.setTimeout(30000);
 
 let mongo: any;
 
 beforeAll(async () => {
     process.env.JWT_KEY = 'someSecretTest';
-
     mongo = await MongoMemoryServer.create();
     await mongoose.connect(mongo.getUri());
 });

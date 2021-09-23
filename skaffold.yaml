@@ -15,15 +15,7 @@ build:
       sync:
         manual:
           - src: "src/**/*.ts"
-            dest: .
-    - image: sunnydanu/tickets
-      context: tickets
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
+            dest: .  
     - image: sunnydanu/client
       context: client
       docker:
@@ -32,3 +24,20 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
+    - image: sunnydanu/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .                
+    - image: sunnydanu/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+                    
