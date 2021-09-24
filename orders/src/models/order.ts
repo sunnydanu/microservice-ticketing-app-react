@@ -5,15 +5,20 @@ import { Ticket } from './ticket';
 export { OrderStatus };
 
 
+
 @modelOptions({
     schemaOptions: {
         toJSON: {
+            virtuals: true,
             transform(doc, ret) {
                 ret.id = ret._id
-                delete ret._id
+                delete ret._id;
+
             },
             versionKey: false
-        }
+        },
+        toObject: { virtuals: true }
+
     }
 })
 
@@ -22,15 +27,15 @@ class Order {
     public userId!: string;
 
 
-    @prop({ enum: OrderStatus, type: String, default: [OrderStatus.Created] })
-    public status!: OrderStatus[];
+    @prop({ enum: OrderStatus, type: String, default: OrderStatus.Created })
+    public status!: string;
 
 
     @prop({ required: true })
-    public expresAt!: Date;
+    public expiresAt!: Date;
 
     @prop({ required: true, ref: () => Ticket })
-    public ticket!: Ref<Ticket>;
+    public ticket?: Ref<Ticket>;
 
 
 }

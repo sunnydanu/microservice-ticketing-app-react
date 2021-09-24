@@ -20,13 +20,13 @@ it('returns an error if the ticket is already reserved', async () => {
     price: 20,
   });
 
+
   await OrderModel.create({
     ticket,
     userId: 'laskdflkajsdf',
     status: OrderStatus.Created,
     expiresAt: new Date(),
   });
-
 
   await request(app)
     .post('/api/orders')

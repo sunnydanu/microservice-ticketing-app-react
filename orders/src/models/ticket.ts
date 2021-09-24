@@ -1,16 +1,19 @@
 import { DocumentType, getModelForClass, modelOptions, prop, ReturnModelType } from '@typegoose/typegoose'
-import { ModelType } from '@typegoose/typegoose/lib/types';
+
 import { OrderModel, OrderStatus } from './order';
 
 @modelOptions({
     schemaOptions: {
         toJSON: {
+            virtuals: true,
             transform(doc, ret) {
                 ret.id = ret._id
-                delete ret._id
+                delete ret._id;
             },
             versionKey: false
-        }
+        },
+        toObject: { virtuals: true }
+
     }
 })
 
@@ -21,15 +24,13 @@ class Ticket {
     @prop({ required: true, min: 0 })
     public price!: number;
 
-    @prop({ required: true })
-    public userId!: string;
+
 
     // the "this" definition is required to have the correct types
 
-    // the "this" definition is required to have the correct types
-    public static async isReserved(this: ReturnModelType<typeof Ticket>) {
+    public async isReserved(this: DocumentType<Ticket>): Promise<boolean> {
         const exisitingOrder = await OrderModel.findOne({
-            ticket: new this,
+            ticket: this,
             status: {
                 $in: [
                     OrderStatus.AwaitingPayment,

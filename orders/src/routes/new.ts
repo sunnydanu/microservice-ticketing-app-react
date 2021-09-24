@@ -7,6 +7,7 @@ import { OrderModel } from '../models/order';
 
 const EXPIRATION_WINDOW_SECONDS: number = 15 * 60;
 
+
 const router = express.Router();
 
 router.post('/api/orders', requireAuth, [
@@ -31,7 +32,7 @@ router.post('/api/orders', requireAuth, [
 
         // Make sure that this ticket is not already reserved
 
-        const exisitingOrder = await TicketModel.isReserved();
+        const exisitingOrder = await ticket.isReserved();
         if (exisitingOrder) {
             throw new BadRequestError('Ticket is alredy reserved.')
         }

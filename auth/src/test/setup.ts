@@ -8,10 +8,15 @@ jest.setTimeout(30000);
 let mongo: any;
 
 beforeAll(async () => {
+   
     process.env.JWT_KEY = 'someSecretTest';
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
     mongo = await MongoMemoryServer.create();
-    await mongoose.connect(mongo.getUri());
+    const mongoUri = mongo.getUri();
+    await mongoose.connect(mongoUri);
 });
+
 
 beforeEach(async () => {
     const collections = await mongoose.connection.db.collections();
