@@ -1,10 +1,8 @@
-import { getModelForClass, modelOptions, prop, Ref } from '@typegoose/typegoose'
+import { getModelForClass, modelOptions, mongoose, prop, Ref } from '@typegoose/typegoose'
 import { OrderStatus } from '@freakybug/ms-common'
 import { Ticket } from './ticket';
 
 export { OrderStatus };
-
-
 
 @modelOptions({
     schemaOptions: {
@@ -23,11 +21,13 @@ export { OrderStatus };
 })
 
 class Order {
+    @prop()
+    public id!: string;
+
     @prop({ required: true })
     public userId!: string;
 
-
-    @prop({ enum: OrderStatus, type: String, default: OrderStatus.Created })
+    @prop({ enum: Object.values(OrderStatus), type: String, default: OrderStatus.Created })
     public status!: string;
 
 
@@ -35,7 +35,7 @@ class Order {
     public expiresAt!: Date;
 
     @prop({ required: true, ref: () => Ticket })
-    public ticket?: Ref<Ticket>;
+    public ticket: Ref<Ticket>;
 
 
 }

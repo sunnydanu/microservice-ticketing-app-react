@@ -5,6 +5,9 @@ import { body } from 'express-validator'
 import { TicketModel } from '../models/ticket';
 import { OrderModel } from '../models/order';
 
+import { OrderCreatedPublisher } from '../events/publishers/order-created-publiser';
+import { natsWrapper } from '../nats-wrapper';
+
 const EXPIRATION_WINDOW_SECONDS: number = 15 * 60;
 
 
@@ -13,10 +16,10 @@ const router = express.Router();
 router.post('/api/orders', requireAuth, [
 
     body('ticketId')
-      .not()
-      .isEmpty()
-      .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
-      .withMessage('TicketId must be provided'),
+        .not()
+        .isEmpty()
+        .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
+        .withMessage('TicketId must be provided'),
 ],
     validateRequest,
     async (req: Request, res: Response) => {
@@ -42,7 +45,7 @@ router.post('/api/orders', requireAuth, [
         expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
 
         // Build the order and save it to the database
-        const order =  await OrderModel.create({
+        const order = await OrderModel.create({
             userId: req.currentUser!.id,
             status: OrderStatus.Created,
             expiresAt: expiration,
@@ -50,6 +53,17 @@ router.post('/api/orders', requireAuth, [
         });
 
         // Publish an event saying that an order was created 
+
+        new OrderCreatedPublisher(natsWrapper.client).publish({
+            id: order.id,
+            status: (order.status) as OrderStatus,
+            userId: order.userId,
+            expiresAt: order.expiresAt.toISOString(),
+            ticket: {
+                id: ticket.id,
+                price: ticket.price
+            }
+        })
         res.status(201).send(order);
     })
 

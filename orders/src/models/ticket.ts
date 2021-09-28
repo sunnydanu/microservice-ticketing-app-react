@@ -2,6 +2,7 @@ import { DocumentType, getModelForClass, modelOptions, prop, ReturnModelType } f
 
 import { OrderModel, OrderStatus } from './order';
 
+
 @modelOptions({
     schemaOptions: {
         toJSON: {
@@ -15,9 +16,23 @@ import { OrderModel, OrderStatus } from './order';
         toObject: { virtuals: true }
 
     }
-})
+});
 
+interface TicketAttr {
+
+    public id: string;
+
+
+    public title: string;
+
+
+    public price: number;
+}
 class Ticket {
+
+    @prop()
+    public id!: string;
+
     @prop({ required: true })
     public title!: string;
 
@@ -43,6 +58,15 @@ class Ticket {
         });
 
         return !!exisitingOrder;
+
+    }
+    public static async build(this: ReturnModelType<typeof Ticket>, attrs: TicketAttr) {
+
+        try {
+            return this.create({ _id: attrs.id, title: attrs.title, price: attrs.price });
+        } catch (err) {
+            return null;
+        }
 
     }
 
