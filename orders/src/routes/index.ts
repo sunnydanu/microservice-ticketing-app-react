@@ -1,16 +1,15 @@
-import { requireAuth } from '@freakybug/ms-common';
 import express, { Request, Response } from 'express';
-import { OrderModel } from '../models/order';
-import { TicketModel } from '../models/ticket';
+import { requireAuth } from '@freakybug/ms-common';
+import { Order } from '../models/order';
 
 const router = express.Router();
 
 router.get('/api/orders', requireAuth, async (req: Request, res: Response) => {
-    const orders = await OrderModel.find({
-        userId: req.currentUser!.id,
-    }).populate({ path: "ticket", model: TicketModel });
+  const orders = await Order.find({
+    userId: req.currentUser!.id,
+  }).populate('ticket');
 
-    res.send(orders);
-})
+  res.send(orders);
+});
 
 export { router as indexOrderRouter };

@@ -1,5 +1,5 @@
 import { Publisher, Subjects, TicketUpdatedEvent } from '@freakybug/ms-common';
 
-export class TicketUpdatedPublisher extends Publisher<TicketUpdatedEvent>{
-    subject: Subjects.TicketUpdated= Subjects.TicketUpdated;
+export class TicketUpdatedPublisher extends Publisher<TicketUpdatedEvent> {
+  readonly subject = Subjects.TicketUpdated;
 }

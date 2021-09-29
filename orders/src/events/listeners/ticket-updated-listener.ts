@@ -1,6 +1,6 @@
 import { Message } from 'node-nats-streaming';
 import { Subjects, Listener, TicketUpdatedEvent } from '@freakybug/ms-common';
-import { TicketModel } from '../../models/ticket';
+import { Ticket } from '../../models/ticket';
 import { queueGroupName } from './queue-group-name';
 
 export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
@@ -8,7 +8,7 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   queueGroupName = queueGroupName;
 
   async onMessage(data: TicketUpdatedEvent['data'], msg: Message) {
-    const ticket = await TicketModel.findById(data.id);
+    const ticket = await Ticket.findById(data.id);
 
     if (!ticket) {
       throw new Error('Ticket not found');

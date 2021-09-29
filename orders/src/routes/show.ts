@@ -4,8 +4,7 @@ import {
   NotFoundError,
   NotAuthorizedError,
 } from '@freakybug/ms-common';
-import { OrderModel } from '../models/order';
-import { TicketModel } from '../models/ticket';
+import { Order } from '../models/order';
 
 const router = express.Router();
 
@@ -13,7 +12,8 @@ router.get(
   '/api/orders/:orderId',
   requireAuth,
   async (req: Request, res: Response) => {
-    const order = await OrderModel.findById(req.params.orderId).populate({ path: "ticket", model: TicketModel });
+    const order = await Order.findById(req.params.orderId).populate('ticket');
+
     if (!order) {
       throw new NotFoundError();
     }

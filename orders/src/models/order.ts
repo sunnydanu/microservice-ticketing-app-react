@@ -1,47 +1,61 @@
-import { getModelForClass, modelOptions, mongoose, prop, Ref } from '@typegoose/typegoose'
-import { OrderStatus } from '@freakybug/ms-common'
-import { Ticket } from './ticket';
+import mongoose from 'mongoose';
+import { OrderStatus } from '@freakybug/ms-common';
+import { TicketDoc } from './ticket';
 
 export { OrderStatus };
 
-@modelOptions({
-    schemaOptions: {
-        toJSON: {
-            virtuals: true,
-            transform(doc, ret) {
-                ret.id = ret._id
-                delete ret._id;
-
-            },
-            versionKey: false
-        },
-        toObject: { virtuals: true }
-
-    }
-})
-
-class Order {
-    @prop()
-    public id!: string;
-
-    @prop({ required: true })
-    public userId!: string;
-
-    @prop({ enum: Object.values(OrderStatus), type: String, default: OrderStatus.Created })
-    public status!: string;
-
-
-    @prop({ required: true })
-    public expiresAt!: Date;
-
-    @prop({ required: true, ref: () => Ticket })
-    public ticket: Ref<Ticket>;
-
-
+interface OrderAttrs {
+  userId: string;
+  status: OrderStatus;
+  expiresAt: Date;
+  ticket: TicketDoc;
 }
 
+interface OrderDoc extends mongoose.Document {
+  userId: string;
+  status: OrderStatus;
+  expiresAt: Date;
+  ticket: TicketDoc;
+}
 
-const OrderModel = getModelForClass(Order);
+interface OrderModel extends mongoose.Model<OrderDoc> {
+  build(attrs: OrderAttrs): OrderDoc;
+}
 
+const orderSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: Object.values(OrderStatus),
+      default: OrderStatus.Created,
+    },
+    expiresAt: {
+      type: mongoose.Schema.Types.Date,
+    },
+    ticket: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Ticket',
+    },
+  },
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+      },
+    },
+  }
+);
 
-export { OrderModel, Order }
+orderSchema.statics.build = (attrs: OrderAttrs) => {
+  return new Order(attrs);
+};
+
+const Order = mongoose.model<OrderDoc, OrderModel>('Order', orderSchema);
+
+export { Order };
