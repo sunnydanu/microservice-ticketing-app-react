@@ -28,13 +28,17 @@ router.delete(
         order.status = OrderStatus.Cancelled;
         await order.save();
 
+      
+
+
+
         // publishing an event saying this was cancelled!
-        new OrderCancelledPublisher(natsWrapper.client).publish({
-            id: order.id,
-            ticket: {
-                id: (order?.ticket?.id) as string
-            }
-        });
+        // new OrderCancelledPublisher(natsWrapper.client).publish({
+        //     id: order.id,
+        //     ticket: {
+        //         id: (order?.ticket?.id) as string
+        //     }
+        // });
         res.status(204).send(order);
     }
 );

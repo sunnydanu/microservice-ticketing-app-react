@@ -1,35 +1,28 @@
-import { DocumentType, getModelForClass, modelOptions, prop, ReturnModelType } from '@typegoose/typegoose'
 
+import { DocumentType, getModelForClass, modelOptions, prop, ReturnModelType } from '@typegoose/typegoose'
+import { ModelType } from '@typegoose/typegoose/lib/types';
 import { OrderModel, OrderStatus } from './order';
 
+interface TicketAttr {
+
+    id: string;
+    title: string;
+    price: number;
+}
 
 @modelOptions({
     schemaOptions: {
         toJSON: {
-            virtuals: true,
             transform(doc, ret) {
                 ret.id = ret._id
-                delete ret._id;
+                delete ret._id
             },
             versionKey: false
-        },
-        toObject: { virtuals: true }
-
+        }
     }
-});
+})
 
-interface TicketAttr {
-
-    public id: string;
-
-
-    public title: string;
-
-
-    public price: number;
-}
 class Ticket {
-
     @prop()
     public id!: string;
 
@@ -39,7 +32,8 @@ class Ticket {
     @prop({ required: true, min: 0 })
     public price!: number;
 
-
+    @prop({ required: true })
+    public userId!: string;
 
     // the "this" definition is required to have the correct types
 
@@ -60,6 +54,8 @@ class Ticket {
         return !!exisitingOrder;
 
     }
+
+
     public static async build(this: ReturnModelType<typeof Ticket>, attrs: TicketAttr) {
 
         try {
@@ -69,7 +65,6 @@ class Ticket {
         }
 
     }
-
 
 
 }
