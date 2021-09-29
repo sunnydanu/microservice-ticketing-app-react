@@ -1,7 +1,7 @@
 import { Ticket } from '../ticket';
 
 it('implements optimistic concurrency control', async () => {
-    //  crate an instan of ticket
+    //  crate an instance of ticket
     const ticket = Ticket.build({
         title: 'concert',
         price: 5,
@@ -23,12 +23,37 @@ it('implements optimistic concurrency control', async () => {
     await firstInstance!.save();
 
     // save the second fetched ticket
-    try{
+    try {
         await secondInstance!.save()
-    }catch(err){
+    } catch (err) {
         return
     }
 
     throw new Error('Should not reach this point')
-  
+
 });
+
+it('increments the version number on multiple save', async () => {
+
+    const ticket = Ticket.build({
+        title: 'concert',
+        price: 5,
+        userId: '123'
+    });
+
+    // save the ticket to the database
+    await ticket.save();
+
+    expect(ticket.version).toEqual(0);
+
+    // save the ticket to the database second
+    await ticket.save();
+
+    expect(ticket.version).toEqual(1);
+
+    // save the ticket to the database third
+    await ticket.save();
+
+    expect(ticket.version).toEqual(2);
+
+})
