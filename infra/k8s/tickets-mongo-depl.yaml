@@ -5,26 +5,26 @@ metadata:
 spec:
   replicas: 1
   selector:
-      matchLabels:
-          app: tickets-mongo
-  template: 
+    matchLabels:
+      app: tickets-mongo
+  template:
     metadata:
-      labels: 
+      labels:
         app: tickets-mongo
     spec:
       containers:
         - name: tickets-mongo
-          image: mongo    
+          image: mongo
 ---
 apiVersion: v1
 kind: Service
 metadata:
-    name: tickets-mongo-srv
+  name: tickets-mongo-srv
 spec:
-  selector: 
+  selector:
     app: tickets-mongo
   ports:
     - name: db
       protocol: TCP
       port: 27017
-      targetPort: 27017  
+      targetPort: 27017

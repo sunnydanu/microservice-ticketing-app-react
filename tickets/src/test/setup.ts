@@ -11,6 +11,7 @@ declare global {
 jest.mock('../nats-wrapper');
 jest.setTimeout(30000);
 
+
 let mongo: any;
 beforeAll(async () => {
   process.env.JWT_KEY = 'asdfasdf';

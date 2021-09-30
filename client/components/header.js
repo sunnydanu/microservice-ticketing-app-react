@@ -30,4 +30,4 @@ const Header = ({ currentUser }) => {
   );
 };
 
-export default Header;
+export default  Header;

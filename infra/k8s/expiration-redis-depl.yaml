@@ -5,26 +5,26 @@ metadata:
 spec:
   replicas: 1
   selector:
-      matchLabels:
-          app: expiration-redis
-  template: 
+    matchLabels:
+      app: expiration-redis
+  template:
     metadata:
-      labels: 
+      labels:
         app: expiration-redis
     spec:
       containers:
         - name: expiration-redis
-          image: redis    
+          image: redis
 ---
 apiVersion: v1
 kind: Service
 metadata:
-    name: expiration-redis-srv
+  name: expiration-redis-srv
 spec:
-  selector: 
+  selector:
     app: expiration-redis
   ports:
     - name: db
       protocol: TCP
       port: 6379
-      targetPort: 6379  
+      targetPort: 6379

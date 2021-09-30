@@ -17,4 +17,4 @@ const SignOut = () => {
   return <div>Signing you out...</div>;
 };
 
-export default SignOut
+export default SignOut;

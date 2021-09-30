@@ -13,9 +13,8 @@ spec:
         app: client
     spec:
       containers:
-        - name: auth
-          image: sunnydanu/client
-         
+        - name: client
+          image: sunnydanu/ticketing-client
 ---
 apiVersion: v1
 kind: Service

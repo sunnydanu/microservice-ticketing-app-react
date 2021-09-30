@@ -14,15 +14,15 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "src/**/*.ts"
-            dest: .  
-    - image: sunnydanu/client
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: sunnydanu/ticketing-client
       context: client
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "**/*.js"
+          - src: '**/*.js'
             dest: .
     - image: sunnydanu/tickets
       context: tickets
@@ -30,16 +30,16 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "src/**/*.ts"
-            dest: .                
+          - src: 'src/**/*.ts'
+            dest: .
     - image: sunnydanu/orders
       context: orders
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "src/**/*.ts"
-            dest: .           
+          - src: 'src/**/*.ts'
+            dest: .
     - image: sunnydanu/expiration
       context: expiration
       docker:

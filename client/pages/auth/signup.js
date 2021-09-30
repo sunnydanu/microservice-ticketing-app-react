@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
 
-const SignOut = () => {
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { doRequest, errors } = useRequest({
@@ -47,4 +47,4 @@ const SignOut = () => {
   );
 };
 
-export default SignOut
+export default SignUp;
