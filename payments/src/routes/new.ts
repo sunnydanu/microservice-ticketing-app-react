@@ -10,6 +10,7 @@ import {
 } from '@freakybug/ms-common';
 import { Order } from "../models/order";
 import { stripe } from "../stripe";
+import { Payment } from "../models/payment";
 
 const router = express.Router();
 
@@ -41,9 +42,10 @@ router.post('/api/payments', requireAuth, validateRequest,
 
         })
 
+        const payment = Payment.build({ orderId, stripeId: payment_response.id })
+        await payment.save();
 
-
-        res.status(201).send({ success: true, payment_response })
+        res.status(201).send({ success: true, payment })
     });
 
 export { router as createChargeRouter };
