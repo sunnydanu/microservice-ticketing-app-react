@@ -9,6 +9,7 @@ import {
     OrderStatus
 } from '@freakybug/ms-common';
 import { Order } from "../models/order";
+import { stripe } from "../stripe";
 
 const router = express.Router();
 
@@ -32,7 +33,17 @@ router.post('/api/payments', requireAuth, validateRequest,
         }
 
 
-        res.send({ success: true })
+        const payment_response = await stripe.charges.create({
+            amount: order.price * 100,
+            currency: 'usd',
+            source: token,
+            description: 'My First Test Charge (created for API docs)',
+
+        })
+
+
+
+        res.status(201).send({ success: true, payment_response })
     });
 
 export { router as createChargeRouter };
